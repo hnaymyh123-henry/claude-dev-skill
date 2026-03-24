@@ -7,6 +7,20 @@ This project follows [Semantic Versioning](https://semver.org/).
 
 ---
 
+## [1.1.0] — 2026-03-24
+
+### Added
+- **轻量模式 (Lightweight Mode)**：Phase 0 新增轻量模式路由。满足「文件 ≤ 2 个、无新对外接口、无 schema 变更、无认证逻辑」时，Tech Lead 可在主对话中直接执行，无需 Issue / worktree / PR 流程，并附内联质量检查
+- `phase3.5.md`：Phase 3.5 QA 触发条件独立文件，量化判断规则（diff 行数 ≥ 50 / 文件数 ≥ 3 / 新增对外接口 / schema 变更 / 认证逻辑），满足任一条件才触发 QA，否则直接进入 Phase 4
+
+### Changed
+- **phase4.md**：Review 新增 Step 0 Scope Drift 检测（`gh pr diff --name-only` 对比 Issue 预期范围，超出则 REQUEST CHANGES）
+- **phase2.md**：新项目初始化流程更详细，拆分为①创建仓库（`gh repo create --clone`）+ ②创建 init commit 推送 main 分支两步，避免 main 分支不存在导致 worktree 创建失败
+- **worker-new.md / worker-fix.md**：并行冲突检查移至 Step 2（代码阅读之前），强调必须先通过冲突检查才能继续，而非作为编码前的可选步骤
+- **qa-agent.md**：QA 报告措辞优化，强调「实际运行测试」与「静态分析推断」的区分
+
+---
+
 ## [1.0.0] — 2026-03-22
 
 ### Initial Release

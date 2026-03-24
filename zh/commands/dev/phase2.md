@@ -44,11 +44,31 @@
    - 与其他任务的依赖关系清晰
    - **识别跨任务共享的基础设施组件**（数据库连接层、认证中间件、公共 utils、API Client 封装），为每个组件单独创建 Issue，标记为其他任务的前置依赖
 
-2. **新项目**时在 GitHub 上执行：
-   - `gh repo create [项目名] --private` 创建仓库
+2. **新项目**时按以下顺序执行：
+
+   **① 创建 GitHub 仓库并初始化本地环境：**
+   ```bash
+   gh repo create [项目名] --private --clone
+   cd [项目名]
+   ```
+   `--clone` 会自动将仓库 clone 到本地当前目录。
+
+   **② 创建初始 commit，使 main 分支真实存在：**
+   ```bash
+   # 写入 PROJECT_CONTEXT.md（参考 ~/.claude/commands/dev/PROJECT_CONTEXT_TEMPLATE.md）
+   git add PROJECT_CONTEXT.md
+   git commit -m "chore: init project context"
+   git push -u origin main
+   ```
+   如需 API Contract，同步创建 `API_CONTRACT.md` 并一并 commit。
+
+   **③ 确认本地工作目录就绪**（此后 Worker Agent 的 worktree 才能正常创建）：
+   ```bash
+   git status   # 应输出 "nothing to commit, working tree clean"
+   ```
+
+   **④ 在 GitHub 上创建 Issue：**
    - 将 PRD 内容作为 Issue #1 创建（标题：`[PRD] 产品需求文档`）
-   - 在仓库根目录创建 `PROJECT_CONTEXT.md`（参考 `~/.claude/commands/dev/PROJECT_CONTEXT_TEMPLATE.md` 中的格式）
-   - 如需 API Contract：创建 `API_CONTRACT.md`，记录所有 endpoint 定义，作为前后端 Issue 的共同约束
    - 为每个开发任务创建对应 Issue（使用下方 Issue 模板）
    - 创建 milestone 关联所有 Issue
 
@@ -84,14 +104,6 @@
 2. 验收标准只需覆盖：故障复现路径 + 修复验证
 3. 展示 Issue 给用户确认后，**立即进入 Phase 3（单 Agent，使用 `worker-fix.md`）**
 4. PR 合并后**必须执行受影响 PR 协调**（见 phase4.md 合并顺序章节）
-
----
-
-## 轻量模式（小改动 / Bug 修复）
-
-1. 直接创建一个 Issue（使用下方 Issue 模板）
-2. 不需要任务拆解和 milestone
-3. 展示 Issue 内容给用户确认后，**立即进入 Phase 3（单 Agent）**
 
 ---
 
