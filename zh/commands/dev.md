@@ -103,23 +103,12 @@ Worker Agent Prompt 文件路径：
 
 ---
 
-## Phase 5 — Retro & 循环
+## Phase 5 — Retro & 技术债清扫
 
-所有 PR 合并后自动触发 Retro，格式：
+**进入此 Phase 前，先读取详细规则：**
+`~/.claude/commands/dev/phase5.md`
 
-```
-## Retro — [项目名]
-### 已完成 / 已知问题 / 未完成 / 建议下一轮优先级
-```
-
-Retro 结束后输出：
-```
-项目当前处于待命状态。你可以：
-- 提出新需求（我会自动分类并走对应流程）
-- 说"先停这里"结束本轮开发
-```
-
-用户提出新需求 → 回到 Phase 0。
+核心原则：先完成 Retro 输出当前迭代总结，再执行技术债清扫（死文档、废弃代码、失效功能），两步均不得跳过。
 
 ---
 
@@ -129,7 +118,7 @@ Retro 结束后输出：
 - **git 操作**：始终在正确的 worktree/目录下执行
 - **不确定需求**：回 Phase 1 追问，不假设
 - **main 分支**：只通过 PR 修改，不直接 push（轻量模式除外）
-- **PROJECT_CONTEXT.md**：架构决策发生变化时**立即更新**，不等到 Phase 5；每轮开发结束后再全量更新（已完成功能列表、当前状态）
+- **PROJECT_CONTEXT.md**：架构决策发生变化时**立即更新对应子文档**（`docs/architecture.md`），不等到 Phase 5；每轮开发结束后更新主索引当前状态 + `docs/feature-log.md`
 - **Hotfix 合并后**：扫描所有 open PR，列出与 hotfix 修改文件重叠的 PR，逐一通知对应 Worker Agent 执行 rebase
 - **REQUEST CHANGES 后**：Worker Agent 修改完成后，必须重新走 Phase 3.5 + Phase 4
 
