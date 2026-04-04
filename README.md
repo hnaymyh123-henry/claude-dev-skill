@@ -2,7 +2,48 @@
 
 [中文版](./README.zh.md)
 
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![Claude Code](https://img.shields.io/badge/Claude%20Code-compatible-blue)](https://claude.com/claude-code)
+[![Skill Type](https://img.shields.io/badge/type-slash%20command-purple)](https://docs.anthropic.com/en/docs/claude-code/slash-commands)
+
 A custom skill for [Claude Code](https://claude.com/claude-code) that turns Claude into a **Tech Lead** coordinating multiple AI Worker Agents through a complete software development workflow — from requirements alignment to PR merge.
+
+---
+
+## Why /dev?
+
+Most AI coding tools give you a smart autocomplete. `/dev` gives you an **engineering process**.
+
+| Without /dev | With /dev |
+|---|---|
+| Claude writes code directly in chat | Claude acts as Tech Lead — never writes code itself |
+| No structure, easy to lose track | 6-phase SOP from PRD to merge |
+| Single-threaded, one thing at a time | Multiple Worker Agents develop in **parallel** worktrees |
+| You catch conflicts at merge time | Pre-coding conflict scan catches overlaps before they start |
+| Security review is manual | `bandit` + `pip-audit` / `npm audit` run mandatorily before every Review |
+
+---
+
+## How It Works
+
+```
+You: /dev I want to build a Todo app with user auth and task management
+
+Claude (Tech Lead)
+  │
+  ├─ Phase 0 ── Classify request → New Project
+  ├─ Phase 1 ── Align on PRD (2-round confirmation)
+  ├─ Phase 2 ── Architecture decisions + GitHub Issues
+  │
+  ├─ Phase 3 ── Spawn Worker Agents (parallel worktrees)
+  │              ├─ Worker A: Auth module
+  │              ├─ Worker B: Task CRUD API
+  │              └─ Worker C: Frontend components
+  │
+  ├─ Phase 3.5 ── QA Agent static verification
+  ├─ Phase 4 ── Code Review + merge (7-item checklist)
+  └─ Phase 5 ── Retro + next iteration loop
+```
 
 ---
 
@@ -33,7 +74,7 @@ A custom skill for [Claude Code](https://claude.com/claude-code) that turns Clau
 
 | Tool | Notes |
 |------|-------|
-| [Claude Code](https://claude.com/claude-code) | Anthropic's official CLI, login required |
+| [Claude Code](https://claude.com/claude-code) | Anthropic official CLI, login required |
 | [GitHub CLI (`gh`)](https://cli.github.com/) | For Issues, PRs, repos — run `gh auth login` first |
 | Git | Version control |
 
@@ -44,10 +85,10 @@ A custom skill for [Claude Code](https://claude.com/claude-code) that turns Clau
 **Option 1: Script (recommended)**
 
 ```bash
-# macOS / Linux — install English version
+# macOS / Linux — English version
 bash install.sh --lang en
 
-# macOS / Linux — install Chinese version
+# macOS / Linux — Chinese version
 bash install.sh --lang zh
 
 # Windows PowerShell — English
@@ -108,12 +149,12 @@ claude-dev-skill/
 │   └── commands/
 │       ├── dev.md
 │       └── dev/
-│           ├── phase1.md ~ phase4.md
+│           ├── phase1.md ~ phase5.md
 │           ├── worker-new.md
 │           ├── worker-fix.md
 │           ├── qa-agent.md
 │           └── PROJECT_CONTEXT_TEMPLATE.md
-└── zh/                     # Chinese skill files (中文版)
+└── zh/                     # Chinese skill files
     └── commands/
         └── dev/ ...
 ```
@@ -131,6 +172,12 @@ claude-dev-skill/
 - Projects requiring production deployment (no DevOps/deployment capability)
 - Complex database migrations with large amounts of existing data
 - High compliance security requirements (finance, healthcare)
+
+---
+
+## Contributing
+
+Issues and PRs are welcome. If you have ideas for new phases, agent roles, or language support, open an Issue first to discuss.
 
 ---
 
